@@ -1,3 +1,11 @@
+os-server/apm-server.pid
+os-server/.nrepl-port
+os-server/target
+os-ui/apm-ui.pid
+os-ui/node_modules/
+os-ui/resources/public/js
+os-ui/.shadow-cljs/
+os-ui/target/
 pom.xml
 pom.xml.asc
 *.jar

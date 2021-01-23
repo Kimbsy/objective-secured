@@ -39,7 +39,7 @@
      {:style {:margin "0 5px"
               :background-color p1-color
               :color "#FFFFFF"}
-      :onClick #(rf/dispatch [::e/turn-on (:id mission) objective p1-color])}
+      :onClick #(rf/dispatch [::e/turn-on (:id mission) objective :player-1 p1-color])}
      o/sun]]
    [:td
     [:button.btn.btn-lg.btn-block.btn-secondary
@@ -51,7 +51,7 @@
      {:style {:margin "0 5px"
               :background-color p2-color
               :color "#FFFFFF"}
-      :onClick #(rf/dispatch [::e/turn-on (:id mission) objective p2-color])}
+      :onClick #(rf/dispatch [::e/turn-on (:id mission) objective :player-2 p2-color])}
      o/sun]]])
 
 (defn objective-controls
@@ -71,11 +71,13 @@
         "Off"]
        [:th {:style {:text-align "center"}}
         "Player 2"]]
-      (map #(objective-row mission % colors) objectives)]]))
+      (map #(objective-row mission % colors) objectives)
+      (objective-row mission {:index :*ALL*} colors)]]))
 
 (defn player-controls
   []
-  (let [{p1-color :player-1 p2-color :player-2} @(rf/subscribe [::s/colors])]
+  (let [mission @(rf/subscribe [::s/mission])
+        {p1-color :player-1 p2-color :player-2} @(rf/subscribe [::s/colors])]
     [:<>
      [:div.input-group.input-group-lg {:style {:margin-bottom "20px"}}
       [:div.input-group-prepend
@@ -88,7 +90,7 @@
                             (fn [x]
                               (let [val (-> x .-target .-value)]
                                 (when (re-matches #"#[0-9a-fA-F]{6}" val)
-                                  (rf/dispatch [::e/update-color :player-1 val]))))}]]
+                                  (rf/dispatch [::e/update-color mission :player-1 val]))))}]]
      [:div.input-group.input-group-lg {:style {:margin-bottom "20px"}}
       [:div.input-group-prepend
        [:span.input-group-text {:style {:background-color p2-color
@@ -100,7 +102,7 @@
                             (fn [x]
                               (let [val (-> x .-target .-value)]
                                 (when (re-matches #"#[0-9a-fA-F]{6}" val)
-                                  (rf/dispatch [::e/update-color :player-2 val]))))}]]]))
+                                  (rf/dispatch [::e/update-color mission :player-2 val]))))}]]]))
 
 (defn main-panel
   []

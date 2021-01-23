@@ -27,15 +27,16 @@
                                :description "controlling 40k battlefield objective marker lights"}}
               :handler (swagger/create-swagger-handler)}}]
       ["/turn-on"
-       {:post {:summary "turn on a light specified by mission and index"
+       {:post {:summary "turn on a group of lights specified by mission and index"
                :parameters {:body map?}
                :handler (fn [{{:keys [body]} :parameters}]
                           (core/turn-on body))}}]
       ["/turn-off"
-       {:post {:summary "turn off a light specified by mission and index"
+       {:post {:summary "turn off a group of lights specified by mission and index"
                :parameters {:body map?}
                :handler (fn [{{:keys [body]} :parameters}]
-                          (core/turn-off body))}}]]
+                          (core/turn-off body))}}]
+      ]
 
      {:exception pretty/exception
       :data      {:coercion   reitit.coercion.spec/coercion

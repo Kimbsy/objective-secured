@@ -2,7 +2,10 @@
 
 (defn ->objective
   [i o]
-  {:index i})
+  {:index i
+   :status :off
+   :player nil
+   :color "#000000"})
 
 (defn ->objectives
   [os]

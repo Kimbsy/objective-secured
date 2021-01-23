@@ -9,7 +9,8 @@
                  [org.clojure/clojure "1.10.0"]
                  [org.clojure/data.json "0.2.6"]
                  [ring-cors "0.1.13"]
-                 [ring/ring-jetty-adapter "1.7.1"]]
+                 [ring/ring-jetty-adapter "1.7.1"]
+                 [clj-serial "2.0.5"]]
   :main ^:skip-aot objective-secured.server
   :target-path "target/%s"
   :profiles {:uberjar {:aot :all}})

@@ -1,11 +1,28 @@
 #include <Adafruit_NeoPixel.h>
 
-#define S1_PIN 2
-#define S1_COUNT 2
+#define STRIP_PIN 2
+#define STRIP_COUNT 36
 
-Adafruit_NeoPixel strip(S1_COUNT, S1_PIN, NEO_GRB + NEO_KHZ800);
+Adafruit_NeoPixel strip(STRIP_COUNT, STRIP_PIN, NEO_GRB + NEO_KHZ800);
 
 String splitInput[4];
+
+struct mission {
+    String name;
+    int indices[6];
+};
+
+mission missions[] = {
+    {"incisive-attack",    {1, 12, 19, 30,  0,  0}},
+    {"outriders",          {8, 16, 26, 34,  0,  0}},
+    {"encircle",           {5, 13, 23, 31,  0,  0}},
+    {"divide-and-conquer", {2, 10, 20, 28,  0,  0}},
+    {"crossfire",          {7, 17, 25, 35,  0,  0}},
+    {"centre-ground",      {0,  6, 18, 24,  0,  0}},
+    {"forward-push",       {4, 14, 22, 32,  0,  0}},
+    {"ransack",            {3,  9, 15, 21, 27, 33}},
+    {"shifting-front",     {3, 11, 21, 29,  0,  0}}
+};
 
 void setup() {
     Serial.begin(9600);
@@ -23,8 +40,8 @@ void loop() {
         String input = Serial.readStringUntil('\n');
         split(input);
         String action = splitInput[0];
-        String mission = splitInput[1];
-        int index = splitInput[2].toInt();
+        String missionName = splitInput[1];
+        int index = getIndex(missionName, splitInput[2].toInt());
         String color;
         if (splitInput[0] == "ON") {
             color = splitInput[3];
@@ -37,6 +54,16 @@ void loop() {
         strip.setPixelColor(index, r, g, b);
         strip.show();
     }
+}
+
+int getIndex(String missionName, int objective) {
+    mission m;
+    for (int i = 0; i < 9; i++) {
+        if (missions[i].name == missionName) {
+            m = missions[i];
+        }
+    }
+    return m.indices[objective];
 }
 
 String getValue(String data, int index) {

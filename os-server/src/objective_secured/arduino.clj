@@ -1,8 +1,9 @@
 (ns objective-secured.arduino
-  (:require [serial.core :as s]))
+  (:require [serial.core :as s]
+            [clojure.java.shell :as shell]))
 
 (def port-location "/dev/ttyACM0")
-(defonce port (s/open port-location))
+(def port (s/open port-location))
 
 (defn prepare-string
   [s]
@@ -10,9 +11,8 @@
 
 (defn send-command
   [action mission-id objective-index player-color]
-  (->> [action mission-id objective-index player-color "\n"]
-       (filter some?)
-       (interpose "|")
-       (apply str)
-       prepare-string
-       (s/write port)))
+  (let [command-string (->> [action mission-id objective-index player-color "\n"]
+                            (filter some?)
+                            (interpose "|")
+                            (apply str))]
+    (shell/sh "python3" "../buffer.py" command-string)))

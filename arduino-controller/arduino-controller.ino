@@ -9,7 +9,6 @@ String splitInput[4];
 
 void setup() {
     Serial.begin(9600);
-    while (!Serial);
 
     strip.begin();
     strip.show();

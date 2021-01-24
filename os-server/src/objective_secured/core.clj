@@ -4,7 +4,6 @@
 (defn turn-on
   [{:keys [mission-id objectives player-color]}]
   (doseq [o objectives]
-    (prn "ON" mission-id o player-color)
     (a/send-command "ON"
                     (name mission-id)
                     o
@@ -14,7 +13,6 @@
 (defn turn-off
   [{:keys [mission-id objectives]}]
   (doseq [o objectives]
-    (prn "OFF" mission-id o)
     (a/send-command "OFF"
                     (name mission-id)
                     o

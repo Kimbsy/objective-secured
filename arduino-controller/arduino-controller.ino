@@ -30,9 +30,8 @@ void setup() {
     strip.begin();
     strip.show();
 
-    strip.setPixelColor(0, 255, 0, 0);
-    strip.setPixelColor(1, 0, 255, 0);
-    strip.show();
+    greenFlash();
+    greenFlash();
 }
 
 void loop() {
@@ -54,6 +53,15 @@ void loop() {
         strip.setPixelColor(index, r, g, b);
         strip.show();
     }
+}
+
+void greenFlash() {
+    strip.fill(strip.Color(0, 255, 0), 0, 36);
+    strip.show();
+    delay(200);
+    strip.fill(0, 0, 36);
+    strip.show();
+    delay(200);
 }
 
 int getIndex(String missionName, int objective) {

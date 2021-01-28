@@ -42,7 +42,7 @@
  ::turn-on
  (fn [db [_ mission objective player player-color]]
    (let [objective-indices (-current-objective-indices objective db)]
-     (http/post "http://192.168.0.66:3000/turn-on"
+     (http/post "http://192.168.0.77:3000/turn-on"
                 {:with-credentials? false
                  :json-params {:mission-id mission
                                :objectives objective-indices
@@ -61,7 +61,7 @@
  ::turn-off
  (fn [db [_ mission objective]]
    (let [objective-indices (-current-objective-indices objective db)]
-     (http/post "http://192.168.0.66:3000/turn-off"
+     (http/post "http://192.168.0.77:3000/turn-off"
                 {:with-credentials? false
                  :json-params {:mission-id mission
                                :objectives objective-indices}})
@@ -84,7 +84,7 @@
 (re-frame/reg-event-db
  ::update-color
  (fn [{:keys [colors] :as db} [_ mission player color]]
-   (http/post "http://192.168.0.66:3000/turn-on"
+   (http/post "http://192.168.0.77:3000/turn-on"
               {:with-credentials? false
                :json-params {:mission-id (:id mission)
                              :objectives (-held-objective-indices player db)

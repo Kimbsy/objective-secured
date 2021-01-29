@@ -3,9 +3,6 @@
 pushd .
 
 cd os-server
-./build.sh
-
-cd ../os-ui
-./build.sh
+./start.sh
 
 popd

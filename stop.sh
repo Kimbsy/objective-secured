@@ -3,9 +3,6 @@
 pushd .
 
 cd os-server
-./start.sh
-
-cd ../os-ui
-./start.sh
+./stop.sh
 
 popd

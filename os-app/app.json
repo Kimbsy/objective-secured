@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "hello-world",
+    "name": "Objective Secured",
     "slug": "reagent-expo",
     "privacy": "public",
     "entryPoint": "./app/index.js",
@@ -26,6 +26,9 @@
     ],
     "ios": {
       "supportsTablet": true
+    },
+    "android": {
+      "package": "com.kimbsy.objectiveSecured"
     }
   }
 }

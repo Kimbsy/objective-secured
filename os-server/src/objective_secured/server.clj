@@ -79,4 +79,5 @@
 (defn -main
   "Start the server."
   [& _]
-  (start))
+  (start)
+  (core/flash-startup))

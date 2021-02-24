@@ -3,6 +3,7 @@
 
 (defn turn-on
   [{:keys [mission-id objectives player-color]}]
+  (prn (str "TURNING ON:" mission-id objectives player-color))
   (doseq [o objectives]
     (a/send-command "ON"
                     (name mission-id)
@@ -12,6 +13,7 @@
 
 (defn turn-off
   [{:keys [mission-id objectives]}]
+  (prn (str "TURNING OFF:" mission-id objecttives))
   (doseq [o objectives]
     (a/send-command "OFF"
                     (name mission-id)

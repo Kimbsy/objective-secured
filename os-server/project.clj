@@ -12,5 +12,6 @@
                  [ring/ring-jetty-adapter "1.7.1"]
                  [clj-serial "2.0.5"]]
   :main ^:skip-aot objective-secured.server
+  :jvm-opts ["-Xmx512m"]
   :target-path "target/%s"
   :profiles {:uberjar {:aot :all}})

@@ -44,12 +44,12 @@
    :mission-button   {:font-weight      :bold
                       :font-size        18
                       :padding          6
-                      :background-color :blue
+                      :background-color :black
                       :border-radius    999
                       :margin-bottom    20}
    :objective-button {:font-weight      :bold
                       :font-size        18
-                      :padding          6
+                      :padding          4
                       :border-radius    999
                       :margin-bottom    20
                       :background-color :gray}
@@ -59,10 +59,7 @@
                       :font-size     18
                       :color         :white}
    :deployment-map   {:width  380
-                      :height 250}
-   :creds            {:font-weight :normal
-                      :font-size   15
-                      :color       :blue}})
+                      :height 250}})
 
 (defn mission
   []

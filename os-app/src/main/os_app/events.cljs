@@ -46,6 +46,12 @@
          (assoc :mission-idx new-idx)
          (assoc :mission (nth common/missions new-idx))))))
 
+(reg-event-db
+ ::page
+ (fn [db [_ page]]
+   (prn "paging")
+   (assoc db :current-page page)))
+
 (defn -current-objective-indices
   [objective db]
   (if (= :*ALL* (:index objective))
@@ -103,7 +109,7 @@
  (fn [{:keys [colors] :as db} [_ mission player color]]
    (http/post "http://192.168.0.77:3000/turn-on"
               {:with-credentials? false
-               :json-params {:mission-id (:id mission)
+               :json-params {:mission-id mission
                              :objectives (-held-objective-indices player db)
                              :player-color color}})
    (assoc db :colors (assoc colors player color))))

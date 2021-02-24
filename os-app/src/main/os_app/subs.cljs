@@ -2,6 +2,11 @@
   (:require [re-frame.core :refer [reg-sub]]))
 
 (reg-sub
+ ::current-page
+ (fn [db]
+   (:current-page db)))
+
+(reg-sub
  ::mission
  (fn [db]
    (:mission db)))

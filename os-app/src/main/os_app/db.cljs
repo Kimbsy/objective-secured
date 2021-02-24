@@ -10,7 +10,8 @@
 ;; @TODO: spec out the db properly
 
 ;; initial state of app-db
-(defonce app-db {:mission-idx 0
+(defonce app-db {:current-page :main
+                 :mission-idx 0
                  :mission (->> common/missions
                                (filter #(= :incisive-attack (:id %)))
                                first)

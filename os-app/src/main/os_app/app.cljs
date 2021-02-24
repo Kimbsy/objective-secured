@@ -33,14 +33,14 @@
                       :background-color :white
                       :align-items      :center
                       :justify-content  :flex-start}
-   :mission-row      {:flex-direction   :row
-                      :align-self       :stretch
-                      :justify-content  :space-around
-                      :width            380}
-   :objective-row    {:flex-direction   :row
-                      :align-self       :stretch
-                      :justify-content  :space-around
-                      :width            380}
+   :mission-row      {:flex-direction  :row
+                      :align-self      :stretch
+                      :justify-content :space-around
+                      :width           380}
+   :objective-row    {:flex-direction  :row
+                      :align-self      :stretch
+                      :justify-content :space-around
+                      :width           380}
    :mission-button   {:font-weight      :bold
                       :font-size        18
                       :padding          6
@@ -88,10 +88,11 @@
   [mission {:keys [index] :as objective} {p1-color :player-1 p2-color :player-2}]
   [:> rn/View {:style (:objective-row styles)}
    [:> rn/Text {:style (merge (:button-text styles)
-                              {:color :black})}
+                              {:color :black
+                               :width "40%"})}
     (if (= :*ALL* index)
       "All Objectives"
-      (str "Objective " (:index objective)))]
+      (str "Objective " (inc (:index objective))))]
    [:> rn/View {:style (merge (:objective-row styles)
                               {:flex 1})}
     [:> rn/TouchableOpacity {:style    (merge (:objective-button styles)
@@ -117,15 +118,57 @@
        ^{:key objective} [row mission objective colors])
      ]))
 
-(defn player-controls
+(defn settings-button
   []
-  [:<>])
+  [:> rn/TouchableOpacity {:style (:mission-button styles)
+                           :on-press #(rf/dispatch [::e/page :settings])}
+   [:> rn/Text {:style (:button-text styles)}
+    "Settings"]])
+
+(defn settings-controls
+  []
+  (let [mission @(rf/subscribe [::s/mission])
+        {p1-color :player-1 p2-color :player-2} @(rf/subscribe [::s/colors])]
+    [:> rn/View {:style {:flex 5
+                         :margin-top 200}}
+     [:> rn/View {:style {:flex-direction :row}}
+      [:> rn/Text {:style (merge (:button-text styles)
+                                 {:color :black
+                                  :background-color p1-color
+                                  :font-family "monospace"})}
+       "Player 1: "]
+      [:> rn/TextInput
+       {:default-value p1-color
+        :on-change-text (fn [val]
+                          (when (re-matches #"^#[a-fA-F0-9]{6}$" val)
+                            (rf/dispatch [::e/update-color (:id mission) :player-1 (clojure.string/upper-case val)])))}]]
+     [:> rn/View {:style {:flex-direction :row
+                          :margin-bottom 20}}
+      [:> rn/Text {:style (merge (:button-text styles)
+                                 {:color :black
+                                  :background-color p2-color
+                                  :font-family "monospace"})}
+       "Player 2: "]
+      [:> rn/TextInput
+       {:default-value p2-color
+        :on-change-text (fn [val]
+                          (when (re-matches #"^#[a-fA-F0-9]{6}$" val)
+                            (rf/dispatch [::e/update-color (:id mission) :player-2 (clojure.string/upper-case val)])))}]]
+     [:> rn/TouchableOpacity {:style (:mission-button styles)
+                              :on-press #(rf/dispatch [::e/page :main])}
+      [:> rn/Text {:style (merge (:button-text styles)
+                                 {:align-self :center})}
+       "Back"]]]))
 
 (defn root []
-  [:> rn/View {:style (:main styles)}
-   [mission]
-   [objective-controls]
-   [player-controls]])
+  (let [page @(rf/subscribe [::s/current-page])]
+    (case page
+      :main [:> rn/View {:style (:main styles)}
+             [mission]
+             [objective-controls]
+             [settings-button]]
+      :settings [:> rn/View {:style (:main styles)}
+                 [settings-controls]])))
 
 (defn start
   {:dev/after-load true}

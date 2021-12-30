@@ -16,4 +16,6 @@
                                (filter #(= :incisive-attack (:id %)))
                                first)
                  :colors {:player-1 "#00FFFF"
-                          :player-2 "#FF0000"}})
+                          :player-2 "#FF0000"}
+                 :network {:ip-address "192.168.178.58"
+                           :port "3000"}})

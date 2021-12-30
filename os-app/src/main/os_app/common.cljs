@@ -77,3 +77,7 @@
                                []
                                []
                                []])}])
+
+(defn url
+  [{:keys [ip-address port]}]
+  (str "http://" ip-address ":" port))

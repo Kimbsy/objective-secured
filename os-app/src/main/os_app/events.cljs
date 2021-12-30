@@ -63,9 +63,9 @@
 
 (reg-event-db
  ::turn-on
- (fn [db [_ mission objective player player-color]]
+ (fn [{:keys [network] :as db} [_ mission objective player player-color]]
    (let [objective-indices (-current-objective-indices objective db)]
-     (http/post "http://192.168.0.77:3000/turn-on"
+     (http/post (str (common/url network) "/turn-on")
                 {:with-credentials? false
                  :json-params {:mission-id mission
                                :objectives objective-indices
@@ -82,9 +82,9 @@
 
 (reg-event-db
  ::turn-off
- (fn [db [_ mission objective]]
+ (fn [{:keys [network] :as db} [_ mission objective]]
    (let [objective-indices (-current-objective-indices objective db)]
-     (http/post "http://192.168.0.77:3000/turn-off"
+     (http/post (str (common/url network) "/turn-off")
                 {:with-credentials? false
                  :json-params {:mission-id mission
                                :objectives objective-indices}})
@@ -106,10 +106,20 @@
 
 (reg-event-db
  ::update-color
- (fn [{:keys [colors] :as db} [_ mission player color]]
-   (http/post "http://192.168.0.77:3000/turn-on"
+ (fn [{:keys [colors network] :as db} [_ mission player color]]
+   (http/post (str (common/url network) "/turn-on")
               {:with-credentials? false
                :json-params {:mission-id mission
                              :objectives (-held-objective-indices player db)
                              :player-color color}})
    (assoc db :colors (assoc colors player color))))
+
+(reg-event-db
+ ::update-ip-address
+ (fn [db [_ ip-address]]
+   (assoc-in db [:network :ip-address] ip-address)))
+
+(reg-event-db
+ ::update-port
+ (fn [db [_ port]]
+   (assoc-in db [:network :port] port)))

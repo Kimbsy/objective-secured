@@ -125,7 +125,8 @@
 (defn settings-controls
   []
   (let [mission @(rf/subscribe [::s/mission])
-        {p1-color :player-1 p2-color :player-2} @(rf/subscribe [::s/colors])]
+        {p1-color :player-1 p2-color :player-2} @(rf/subscribe [::s/colors])
+        {:keys [ip-address port]} @(rf/subscribe [::s/network])]
     [:> rn/View {:style {:flex 5
                          :margin-top 200}}
      [:> rn/View {:style {:flex-direction :row}}
@@ -151,6 +152,32 @@
         :on-change-text (fn [val]
                           (when (re-matches #"^#[a-fA-F0-9]{6}$" val)
                             (rf/dispatch [::e/update-color (:id mission) :player-2 (clojure.string/upper-case val)])))}]]
+
+     [:> rn/View {:style {:flex-direction :row
+                          :margin-bottom 20}}
+      [:> rn/Text {:style (merge (:button-text styles)
+                                 {:color :black
+                                  :background-color :gray
+                                  :font-family "monospace"})}
+       "IP Address: "]
+      [:> rn/TextInput
+       {:default-value ip-address
+        :on-change-text (fn [val]
+                          (when (re-matches #"\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}" val)
+                            (rf/dispatch [::e/update-ip-address val])))}]]
+     [:> rn/View {:style {:flex-direction :row
+                          :margin-bottom 20}}
+      [:> rn/Text {:style (merge (:button-text styles)
+                                 {:color :black
+                                  :background-color :gray
+                                  :font-family "monospace"})}
+       "Port: "]
+      [:> rn/TextInput
+       {:default-value port
+        :on-change-text (fn [val]
+                          (when (re-matches #"\d+" val)
+                            (rf/dispatch [::e/update-port val])))}]]
+
      [:> rn/TouchableOpacity {:style (:mission-button styles)
                               :on-press #(rf/dispatch [::e/page :main])}
       [:> rn/Text {:style (merge (:button-text styles)

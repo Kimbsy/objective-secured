@@ -20,3 +20,8 @@
  ::colors
  (fn [db]
    (:colors db)))
+
+(reg-sub
+ ::network
+ (fn [db]
+   (:network db)))

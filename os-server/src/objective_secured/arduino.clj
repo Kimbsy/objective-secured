@@ -2,8 +2,8 @@
   (:require [serial.core :as s]
             [clojure.java.shell :as shell]))
 
-(def port-location "/dev/ttyACM0")
-(def port (s/open port-location))
+;; (def port-location "/dev/ttyACM0")
+;; (def port (s/open port-location))
 
 (defn prepare-string
   [s]

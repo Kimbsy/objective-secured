@@ -11,13 +11,15 @@ These missions use objectives on the battlefield in fixed locations
 which can be captured and/or held by either players army (see poorly
 cropped [mission images](os-app/assets/deployment-maps)).
 
-I built a battlefield using mdf, extruded aluminium struts and a while
-lot of epoxy glue. I drilled holes in all the objective locations and
+I built a battlefield using mdf, extruded aluminium struts and a whole
+lot of hot glue. I drilled holes in all the objective locations and
 then wired up RGB LEDs to shine through them from underneath.
 
 I made objective markers by taking selenite crystal towers (they're
 not magic, but they do act like fibre-optics) and sticking them onto
 40mm bases which I cut holes in so the light could shine through.
+
+Check out the [pics](/pics) to get an idea of what it looks like.
 
 This repo contains the code for controlling the lights on the
 battlefield.
